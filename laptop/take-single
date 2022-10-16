@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# xfer-single - take and transfer a single picture from the Pi
+
+
+REMOTEHOST=veropi.local
+
+LOCALFILE=$HOME/Pictures/Camera-$$.jpg
+
+
+# connect to the Pi, take a picture and get the filename
+
+REMOTEFILE=$(ssh $REMOTEHOST bin/take-single)
+
+
+# copy the file back to this computer and remove it from the Pi
+
+scp "${REMOTEHOST}:${REMOTEFILE}" "$LOCALFILE"
+ssh $REMOTEHOST rm "$REMOTEFILE"
+
+
+# show the picture and wait for it to be closed
+
+echo Opening image - Quit Preview application when done
+
+open -W "$LOCALFILE"
+
+
+# remove the temporary file
+
+rm "$LOCALFILE"

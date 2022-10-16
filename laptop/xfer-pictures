@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# xfer-pictures - transfer pictures from Pi and remove them on there after
+
+
+REMOTEDIR=veropi.local:/media/vmts/VEROPI-PICS/Pictures
+LOCALDIR="$HOME/Pictures/Pi Pictures"
+
+rsync -vr --remove-source-files "$REMOTEDIR/" "$LOCALDIR"

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# ssh-house - connect into the house with remote back tunnel
+
+
+ssh -p 65226 -R 7022:localhost:22 -R 7023:veropi.local:22 house.mince.net

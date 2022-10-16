@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# shutdown-veropi - remotely shut down veropi
+
+
+ssh veropi.local sudo poweroff

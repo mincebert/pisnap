@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# set-pi-time - get the current time on this host and set the Pi time from it
+
+
+PIHOST=vmts@veropi.local
+
+
+# turn off NTP on the Pi
+
+ssh -t $PIHOST sudo timedatectl set-ntp false
+
+
+# get the current time and set the time on the Pi using it, all in UTC
+#
+# unfortunately, the delay in authenticating to the Pi means the clock will
+# be out by a few seconds but this is not a major issue, in our case, and
+# working around it would be complicated
+
+TIME="$(date -u '+%Y-%m-%d %H:%M:%S')"
+ssh -t $PIHOST sudo timedatectl set-time \"$TIME UTC\"
