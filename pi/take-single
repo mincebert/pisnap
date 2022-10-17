@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# take-single - snap a single picture and return its name
+
+
+# name to store picture under, including date and time
+
+IMAGEFILE=camera-$(date +%F_%H.%M.%S).jpg
+
+STOREDIR=$HOME/Pictures
+
+
+# take a picture and store it in a file
+
+libcamera-still --verbose 0 --immediate --nopreview --output $STOREDIR/$IMAGEFILE
+
+
+# print the filename
+
+echo $STOREDIR/$IMAGEFILE

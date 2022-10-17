@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# take-picture - snap a picture from the Pi camera
+
+
+# name to store picture under, including date and time
+
+IMAGEDIR=$(date +%F)
+IMAGEFILE=camera-$(date +%F_%H.%M.%S).jpg
+
+TMPDIR=$HOME/Pictures
+STOREDIR=/media/vmts/VEROPI-PICS/Pictures
+
+
+# if the storage directory doesn't exist, quietly exit
+#
+# this will mean things silently keep failing but it's better than generating
+# errors every minute
+
+if [ ! -d "$STOREDIR" ]; then
+  exit 0
+fi
+
+
+# make the directory for this hour's images, if it doesn't already exist
+
+if [ ! -d "$STOREDIR/$IMAGEDIR" ]; then
+  mkdir "$STOREDIR/$IMAGEDIR"
+fi
+
+
+# take a picture to a temporary location
+
+libcamera-still --verbose 0 --immediate --nopreview --output $TMPDIR/$IMAGEFILE
+
+
+# move it into the final location (the directory for this hour)
+
+mv $TMPDIR/$IMAGEFILE $STOREDIR/$IMAGEDIR
