@@ -6,9 +6,11 @@
 PIHOST=vmts@veropi.local
 
 
-# turn off NTP on the Pi
+# turn off NTP on the Pi and wait 3 seconds for it to take effect
 
+echo Disabling NTP on Pi
 ssh -t $PIHOST sudo timedatectl set-ntp false
+sleep 3
 
 
 # get the current time and set the time on the Pi using it, all in UTC
@@ -17,5 +19,12 @@ ssh -t $PIHOST sudo timedatectl set-ntp false
 # be out by a few seconds but this is not a major issue, in our case, and
 # working around it would be complicated
 
+echo Setting clock manually on Pi
 TIME="$(date -u '+%Y-%m-%d %H:%M:%S')"
 ssh -t $PIHOST sudo timedatectl set-time \"$TIME UTC\"
+
+
+# wait 5 seconds just so you can confirm the time
+
+echo Done
+sleep 5
